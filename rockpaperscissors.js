@@ -48,5 +48,5 @@ console.log(playerSelection)
 console.log(playRound(playerSelection, computerSelection));
 
 function game() {
-
+    const currentGame = playRound(playerSelection, computerSelection);
 }
