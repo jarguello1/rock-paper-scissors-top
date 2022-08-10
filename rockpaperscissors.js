@@ -69,4 +69,11 @@ function game() {
     }
     console.log("Player Score: " + playerWins);
     console.log("Computer score " + computerWins);
-}
+    if (playerWins > computerWins) {
+        console.log("You win!");
+    } else if (computerWins > playerWins) {
+        console.log("You lose...");
+    } else if (playerWins === computerWins) {
+        console.log("It's a draw!!!!")
+    }
+} 
