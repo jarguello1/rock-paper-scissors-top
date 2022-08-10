@@ -18,16 +18,15 @@ function getComputerChoice() {
     }
 }
 
-const computerSelection = getComputerChoice();
-console.log(computerSelection)
-const playerSelection = prompt().toLowerCase();
+
 
 function playRound(playerSelection, computerSelection) {
     const playerChoice = playerSelection;
     const computerChoice = computerSelection;
 
     if (playerChoice === computerChoice) {
-        return "Draw!";
+        console.log("Draw!")
+        return "Draw";
     } else if (playerChoice === "rock" && computerChoice === "paper") {
         console.log("You Lose! Paper beats Rock");
         return "computer";
@@ -49,12 +48,26 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-console.log(computerSelection)
-console.log(playerSelection)
-console.log(playRound(playerSelection, computerSelection));
-
 function game() {
+
+    let playerWins = 0;
+    let computerWins = 0;
     for (let i = 0; i < 5; i++) {
+
+        const computerSelection = getComputerChoice();
+        console.log(computerSelection)
+        const playerSelection = prompt().toLowerCase();
+
         const result = playRound(playerSelection, computerSelection);
+        if (result === "player") {
+            playerWins++;
+        } else if (result === "computer") {
+            computerWins++;
+        } 
+        else {
+            continue;
+        }
     }
+    console.log("Player Score: " + playerWins);
+    console.log("Computer score " + computerWins);
 }
