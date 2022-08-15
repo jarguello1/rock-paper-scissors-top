@@ -10,25 +10,33 @@
 </head>
 <body>
 
-    <h1>ROCK PAPER SCISSORS</h1>
+    <h1 class="title">ROCK PAPER SCISSORS</h1>
+    <div id ="rules">First to 5 wins!</div>
     <div id="container">
         <button id="rock">Rock</button>
         <button id="paper">Paper</button>
         <button id="scissors">Scissors</button>
     </div>
     <div id="results">
-        <div id="gameResults">RESULTS</div>
+        <div id="gameResults"></div>
     </div>
 
     <div id="scores">
         <h2>Scores</h2>
-        <h3>Player Score</h3>
-        <div id="playerScore">0</div>
-        <h3>Computer Score</h3>
-        <div id="computerScore">0</div>
+        
+        <div id="scoreContainer">
+            <div class="points">
+                <h2>Player Score</h2>
+                <div id="playerScore">0</div>
+            </div>
+            <div class="points">
+                <h2>Computer Score</h2>
+                <div id="computerScore">0</div>
+            </div>
+        </div>
     </div>
 
-    <div id="winner">Winner:</div>
+    <div id="winner"></div>
 
     <button id="reset">Play Again!</button>
 </body>
