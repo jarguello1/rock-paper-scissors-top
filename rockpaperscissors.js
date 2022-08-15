@@ -1,10 +1,17 @@
 
-// use random number generator to decide computers choice
-// prompt user for their choice
-// compare the two choices
-// print result
-// have a game function that repeats for 5 rounds and keeps track of score
+const container = document.querySelector('#results');
+const winnerBox = document.querySelector('#winner');
+const resetBtn = document.querySelector('#reset');
+const buttons = document.querySelectorAll('button');
 
+//create dom element to append results
+const content = document.createElement('div');
+content.classList.add('content');
+
+//refresh page for new game
+resetBtn.addEventListener('click',() => location.reload());
+
+// use random number generator to get computer choice
 let randomNumber = Math.floor(Math.random()*100) + 1;
 
 function getComputerChoice() {
@@ -18,62 +25,79 @@ function getComputerChoice() {
     }
 }
 
-
-
-function playRound(playerSelection, computerSelection) {
+// get player choice from button pressed
+// Add points accordingly depending on who wins
+// check for a winner at the end of every round
+function playRound(playerSelection) {
     const playerChoice = playerSelection;
-    const computerChoice = computerSelection;
+    const computerChoice = getComputerChoice();
 
     if (playerChoice === computerChoice) {
-        console.log("Draw!")
-        return "Draw";
+        document.getElementById("gameResults").textContent = "Draw!"
+        return "draw";
     } else if (playerChoice === "rock" && computerChoice === "paper") {
-        console.log("You Lose! Paper beats Rock");
-        return "computer";
+        document.getElementById("gameResults").textContent = "You Lose! Paper beats Rock";
+        computerWins++;
+        document.getElementById("computerScore").textContent = computerWins;
     } else if (playerChoice === "paper" && computerChoice === "scissors") {
-        console.log("You Lose! Scissors beats Paper");
-        return "computer";
+        document.getElementById("gameResults").textContent = "You Lose! Scissors beats Paper";
+        computerWins++;
+        document.getElementById("computerScore").textContent = computerWins;
     } else if (playerChoice === "scissors" && computerChoice === "rock") {
-        console.log("You Lose! Rock beats Scissors");
-        return "computer";
+        document.getElementById("gameResults").textContent = "You Lose! Rock beats Scissors";
+        computerWins++;
+        document.getElementById("computerScore").textContent = computerWins;
     } else if (playerChoice === "paper" && computerChoice === "rock") {
-        console.log("You Win! Paper beats Rock");
-        return "player";
+        document.getElementById("gameResults").textContent = "You win! Paper beats Rock";
+        playerWins++;
+        document.getElementById("playerScore").textContent = playerWins;
     } else if (playerChoice === "rock" && computerChoice === "scissors") {
-        console.log("You Win! Rock beats Scissors");
-        return "player";
+        document.getElementById("gameResults").textContent = "You Win! Rock beats Scissors";
+        playerWins++;
+        document.getElementById("playerScore").textContent = playerWins;
     } else if (playerChoice === "scissors" && computerChoice === "paper") {
-        console.log("You Win! Scissors beats Paper");
-        return "player";
+        document.getElementById("gameResults").textContent = "You Win! Scissors beats Paper";
+        playerWins++;
+        document.getElementById("playerScore").textContent = playerWins;
+    }
+    checkForWinner()
+}
+
+
+// check if either player has reached the top score of 5
+// if they have display winner and turn off buttons
+function checkForWinner() {
+    if (playerWins === 5) { 
+        content.textContent = 'You Win!!\nReset to play again.';
+        winnerBox.appendChild(content);
+        buttons.forEach(button => {
+            button.removeEventListener('click', getPlayerChoice);
+          });
+    } else if (computerWins === 5) {
+        content.textContent = 'You Lose...\nReset to play again.';
+        winnerBox.appendChild(content);
+        buttons.forEach(button => {
+            button.removeEventListener('click', getPlayerChoice);
+          });
     }
 }
 
-function game() {
+//placeholder variables for scores
+let playerWins = 0;
+let computerWins = 0;
 
-    let playerWins = 0;
-    let computerWins = 0;
-    for (let i = 0; i < 5; i++) {
+// event listener for selection buttons
+buttons.forEach((button) => {
 
-        const computerSelection = getComputerChoice();
-        const playerSelection = prompt().toLowerCase();
+    // and for each one we add a 'click' listener
+    button.addEventListener('click', getPlayerChoice);
+});
 
-        const result = playRound(playerSelection, computerSelection);
-        if (result === "player") {
-            playerWins++;
-        } else if (result === "computer") {
-            computerWins++;
-        } 
-        else {
-            continue;
-        }
-    }
-    console.log("Player Score: " + playerWins);
-    console.log("Computer score " + computerWins);
-    if (playerWins > computerWins) {
-        console.log("You win!");
-    } else if (computerWins > playerWins) {
-        console.log("You lose...");
-    } else if (playerWins === computerWins) {
-        console.log("It's a draw!!!!")
-    }
-} 
+// function for button pressing event
+function getPlayerChoice(e) {
+    let playerSelection = (e.target.id);
+    playerChoice  = e.target.textContent;
+    playRound(playerSelection)
+}
+
+
